@@ -6,13 +6,13 @@ with lectureoff; use lectureoff;
 With Ada.Command_Line;
 Use Ada.Command_Line;
 With Ada.Text_IO;
-Use Ada.Text_IO;
+Use Ada.Text_IO;	
 
 procedure main is
 	nbSommet, nbFace : integer;
 	
 	procedure fonctionTest(tabDT : in tableauDoubletTriangle; taille : in integer) is
-		ptCourant : pointeurListeDoubletT;
+		ptCourant : pointeurSurPointeurDT;
 		i : integer;
 	begin
 		i:=0;
@@ -21,7 +21,7 @@ procedure main is
 			Ada.Text_Io.Put( "i: " & Integer'Image(i));
 			
 			ptCourant := tabDT(i);
-			while ptCourant /= NULL loop
+			while (ptCourant /= NULL) and then (ptCourant.Objet.s1 /= NULL) loop
 				Ada.Text_Io.Put(" Triangle");
 				Ada.Text_Io.New_Line;
 				Ada.Text_Io.Put( "x: " & Float'Image(ptCourant.Objet.s1.x) & " y: " & Float'Image(ptCourant.Objet.s1.y) & " z: " & Float'Image(ptCourant.Objet.s1.z));
@@ -69,7 +69,7 @@ begin
 			
 			numeroSommetCourant :=0;
 			--
-			Ada.Text_Io.Put("On est entre dans la boucle");
+			Ada.Text_Io.Put("On entre dans la boucle");
 			Ada.Text_Io.New_Line;
 			--
 			while numeroSommetCourant < nbSommet loop

@@ -12,6 +12,7 @@ type DoubletTriangle;
 type pointeurSommet is access Sommet;
 type pointeurTriangle is access Triangle;
 type pointeurListeDoubletT is access DoubletTriangle;
+type pointeurSurPointeurDT is access all DoubletTriangle;
 --Sommet 
 type Sommet is 
 record 
@@ -40,14 +41,14 @@ end record;
 type DoubletTriangle is 
 record 
 	Objet:Triangle;
-	Succ:pointeurListeDoubletT;
+	Succ:pointeurSurPointeurDT;
 end record;
 
 --Type de tableau pour stocker les sommets lus
 type tableauSommet is  array (integer range <>) of Sommet;
 
 --Type de tableau pour stocker les listes chainées de triangle
-type tableauDoubletTriangle is array (integer range <>) of pointeurListeDoubletT;
+type tableauDoubletTriangle is array (integer range <>) of pointeurSurPointeurDT;
 
 --Procedure permettant d'inserer un DoubletTriangle dans le tableau
 procedure insererDoubletTriangle (doubleT : in out DoubletTriangle; indice : in integer; tableauDoubletT : in out tableauDoubletTriangle);

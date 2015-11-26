@@ -33,10 +33,13 @@ begin
 	max := zLu;
 	
 	i:=1;
-	while i < tailleTableauSommet loop
+	while i < tailleTableauSommet-1 loop
 		
 		zLu := tabS(i).z;
-		
+		--
+		Ada.Text_Io.Put("z : " & Float'Image(zLu));
+		Ada.Text_Io.New_Line;
+		--
 		if zLu > max then
 			max := zLu;
 		end if;
@@ -73,7 +76,7 @@ begin
 	trouveMinMax(tabS, min, max);
 	
 	--
-	Ada.Text_Io.Put("On a trouve min max");
+	Ada.Text_Io.Put("On a trouve min max" & Float'Image(min) & " " & Float'Image(max));
 	Ada.Text_Io.New_Line;
 	--
 	
@@ -83,7 +86,14 @@ begin
 		creerDoubletTriangle (ptCourant, tabS); --Le ptCourant pointe sur un nouveau Doublet Triangle
 		c := ptCourant.Objet.minZ; 		  --On récupère le z minimum de la structure
 		
+		
+		
 		indice := integer(Float(nbFace)*((c-min)/(max-min))); --On calcule l'indice ou placer le doublet triangle
+		
+		--
+		Ada.Text_Io.Put("c : " & Float'Image(c));
+		Ada.Text_Io.New_Line;
+		--
 		
 		--
 		Ada.Text_Io.Put("indice : " & Integer'Image(indice));

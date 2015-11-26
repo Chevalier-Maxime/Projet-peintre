@@ -3,13 +3,21 @@ package body modele is
 
 --Procedure permettant d'inserer un DoubletTriangle dans le tableau
 procedure insererDoubletTriangle (doubleT : in out DoubletTriangle; indice : in integer; tableauDoubletT : in out tableauDoubletTriangle) is
-	ptTemp : pointeurListeDoubletT;
+	ptTemp : pointeurSurPointeurDT;
 begin
 	
 	--
-	Ada.Text_Io.Put("On est entre dans inserer min max");
+	Ada.Text_Io.Put("On est entre dans inserer DT");
 	Ada.Text_Io.New_Line;
 	--
+	Ada.Text_Io.Put(" Triangle a inserer");
+	Ada.Text_Io.New_Line;
+	Ada.Text_Io.Put( "x: " & Float'Image(doubleT.Objet.s1.x) & " y: " & Float'Image(doubleT.Objet.s1.y) & " z: " & Float'Image(doubleT.Objet.s1.z));
+	Ada.Text_Io.New_Line;
+	Ada.Text_Io.Put( "x: " & Float'Image(doubleT.Objet.s2.x) & " y: " & Float'Image(doubleT.Objet.s2.y) & " z: " & Float'Image(doubleT.Objet.s2.z));
+	Ada.Text_Io.New_Line;
+	Ada.Text_Io.Put( "x: " & Float'Image(doubleT.Objet.s3.x) & " y: " & Float'Image(doubleT.Objet.s3.y) & " z: " & Float'Image(doubleT.Objet.s3.z));
+	Ada.Text_Io.New_Line;
 	
 	if tableauDoubletT(indice) = NULL then
 		
