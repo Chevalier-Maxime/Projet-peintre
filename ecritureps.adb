@@ -4,25 +4,19 @@
 
 
 package body ecritureps is 
+	
 	fichierRes: Ada.Text_IO.File_Type;
-
+	
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle) is 
-	ptCourant : pointeurSurPointeurDT;
-	i : integer :=0;
 	
 	begin
+	init(tabTDoubletTriangleTrie'LENGTH);
+	Demarrer(tabTDoubletTriangleTrie);
 	
-	while i <= tabTDoubletTriangleTrie'LENGTH loop
-	
-			ptCourant := tabTDoubletTriangleTrie(i);
-			while (ptCourant /= NULL) and then (ptCourant.Objet.s1 /= NULL) loop
-			
-				ajouterUnTriangle(ptCourant.Objet);
-				ptCourant := ptCourant.Succ; 
-			end loop;
-			
-			i:=i+1;
-		end loop;
+	while finDeSequence loop
+		ajouterUnTriangle(elementCourant);
+		Avancer(tabTDoubletTriangleTrie);
+	end loop;
 	
 	end ecritureDesTriangles;
 	

@@ -95,7 +95,6 @@ begin
 			
 			fonctionTest(tabDT, nbFace);
 			
-			
 			--
 			Ada.Text_Io.Put("On écrit le fichier");
 			Ada.Text_Io.New_Line;
@@ -103,7 +102,6 @@ begin
 			creerFichier(Argument(2));
 			ecritureDesTriangles(tabDT);
 			fermerFichier;
-			--liberer la memoire
 		end;
 		
 	end if;

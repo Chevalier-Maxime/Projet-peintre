@@ -2,6 +2,8 @@ With modele;
 Use modele;
 With Ada.Text_IO;
 Use Ada.Text_IO;
+With modelemachinesequentiel1;
+Use modelemachinesequentiel1;
 
 package ecritureps is
 
