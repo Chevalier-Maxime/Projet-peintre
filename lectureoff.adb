@@ -96,14 +96,15 @@ package body lectureoff is
 
 		begin
 			if(z1<=z2)and(z1<=z3) then 
-				m := z1
+				m := z1;
 			end if;
 			if(z2<=z1)and(z2<=z3) then 
-				m := z2
+				m := z2;
 			end if;
 			if(z3<=z2)and(z3<=z1) then 
-				m := z3
+				m := z3;
 			end if;
+			return m;
 	end minimumZ;
 
 
