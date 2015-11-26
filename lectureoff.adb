@@ -95,22 +95,15 @@ package body lectureoff is
 			m : float;
 
 		begin
-			if(z1<=z2)then
-				if(z2<=z3)then 
-					m:= z3;
-				else 
-					m:= z2;
-				end if;
-			else
-				if(z1<=z3)then
-					m:= z3;
-				else
-					m:= z1;
-				end if; 
+			if(z1<=z2)and(z1<=z3) then 
+				m := z1
 			end if;
-			
-		return m;
-		
+			if(z2<=z1)and(z2<=z3) then 
+				m := z2
+			end if;
+			if(z3<=z2)and(z3<=z1) then 
+				m := z3
+			end if;
 	end minimumZ;
 
 
