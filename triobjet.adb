@@ -88,8 +88,8 @@ begin
 		
 		
 		
-		indice := integer(Float(nbFace)*((c-min)/(max-min))); --On calcule l'indice ou placer le doublet triangle
-		
+		indice := Integer(Float'Floor(Float(nbFace)*((c-min)/(max-min)))); --On calcule l'indice ou placer le doublet triangle
+	
 		--
 		Ada.Text_Io.Put("c : " & Float'Image(c));
 		Ada.Text_Io.New_Line;

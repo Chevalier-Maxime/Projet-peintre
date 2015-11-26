@@ -28,7 +28,7 @@ package body ecritureps is
 	
 	procedure creerFichier( nomFichier : in string) is
 		begin
-			Create(fichierRes, Ada.Text_IO.Out_File, nomFichier);
+			Create(fichierRes, Ada.Text_IO.Out_File, nomFichier&".ps");
 			Ada.Text_Io.Put(fichierRes, "%!PS");
 			Ada.Text_Io.New_Line(fichierRes);
 	end creerFichier;

@@ -1,6 +1,7 @@
 With modele;Use modele;
 with triobjet;use triobjet;
 with lectureoff; use lectureoff;
+with ecritureps; use ecritureps;
 --with ecrire; use ecrire;
 
 With Ada.Command_Line;
@@ -31,7 +32,7 @@ procedure main is
 				Ada.Text_Io.Put( "x: " & Float'Image(ptCourant.Objet.s3.x) & " y: " & Float'Image(ptCourant.Objet.s3.y) & " z: " & Float'Image(ptCourant.Objet.s3.z));
 				Ada.Text_Io.New_Line;
 				
-				ptCourant := ptCourant.Succ; --comprend pas
+				ptCourant := ptCourant.Succ;
 			end loop;
 			
 			i:=i+1;
@@ -94,8 +95,14 @@ begin
 			
 			fonctionTest(tabDT, nbFace);
 			
-			--ecrire(tabDT, Argument(2));
 			
+			--
+			Ada.Text_Io.Put("On écrit le fichier");
+			Ada.Text_Io.New_Line;
+			--
+			creerFichier(Argument(2));
+			ecritureDesTriangles(tabDT);
+			fermerFichier;
 			--liberer la memoire
 		end;
 		
