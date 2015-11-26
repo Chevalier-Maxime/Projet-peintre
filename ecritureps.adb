@@ -3,15 +3,26 @@
 	
 
 
-package body ecriturePS is 
-
+package body ecritureps is 
 	fichierRes: Ada.Text_IO.File_Type;
 
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle) is 
-	i : integer := 0;
+	ptCourant : pointeurSurPointeurDT;
+	i : integer :=0;
 	
 	begin
-	i:=1;
+	
+	while i <= tabTDoubletTriangleTrie'LENGTH loop
+	
+			ptCourant := tabTDoubletTriangleTrie(i);
+			while (ptCourant /= NULL) and then (ptCourant.Objet.s1 /= NULL) loop
+			
+				ajouterUnTriangle(ptCourant.Objet);
+				ptCourant := ptCourant.Succ; 
+			end loop;
+			
+			i:=i+1;
+		end loop;
 	
 	end ecritureDesTriangles;
 	
@@ -28,29 +39,29 @@ package body ecriturePS is
 			close(fichierRes);
 	end fermerFichier;
 	
-	procedure ajouterUnTriangle(triangle : Triangle) is 
+	procedure ajouterUnTriangle(trian : Triangle) is 
 			pointeur : pointeurSommet;
 			remplissage : string := "0 setgray";
 			contour : string := "1 setgray";
 		begin
-			pointeur := triangle.s1;	
-			Ada.Text_Io.Put(fichierRes, pointeur.x&" "&pointeur.y&" moveto");
+			pointeur := trian.s1;	
+			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x) & " " & Float'Image(pointeur.y) & " moveto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
-			pointeur := triangle.s2;	
-			Ada.Text_Io.Put(fichierRes, pointeur.x&" "&pointeur.y&" lineto");
+			pointeur := trian.s2;	
+			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x )& " " & Float'Image(pointeur.y) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
-			pointeur := triangle.s3;	
-			Ada.Text_Io.Put(fichierRes, pointeur.x&" "&pointeur.y&" lineto");
+			pointeur := trian.s3;	
+			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x) & " " & Float'Image(pointeur.y) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
-			pointeur := triangle.s1;	
-			Ada.Text_Io.Put(fichierRes, pointeur.x&" "&pointeur.y&" lineto");
+			pointeur := trian.s1;	
+			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x) & " " & Float'Image(pointeur.y) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
 			Ada.Text_Io.Put(fichierRes, "gsave\n"&remplissage&"\nfill\ngrestore"&contour&"\nstroke");
 			Ada.Text_Io.New_Line(fichierRes);	
 	end ajouterUnTriangle;
 	
-end ecriturePS;
+end ecritureps;

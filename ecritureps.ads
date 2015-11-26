@@ -3,7 +3,7 @@ Use modele;
 With Ada.Text_IO;
 Use Ada.Text_IO;
 
-package ecriturePS is
+package ecritureps is
 
 	--Procedure permettant d'écrire les Triangles
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle);
@@ -12,6 +12,6 @@ package ecriturePS is
 	
 	procedure fermerFichier;
 	
-	procedure ajouterUnTriangle(triangle : Traingle);
+	procedure ajouterUnTriangle(trian : Triangle);
 	
-end ecriturePS;
+end ecritureps;
