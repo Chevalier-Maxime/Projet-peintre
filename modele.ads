@@ -66,4 +66,8 @@ procedure FreeTriangle is new Ada.Unchecked_Deallocation (Triangle, pointeurTria
 --procedure pour liberer un pointeur sur doubletTriangle
 procedure FreeDT is new Ada.Unchecked_Deallocation (DoubletTriangle, pointeurListeDoubletT);
 
+--procedure pour liberer un pointeur sur n'importe quel doubletTriangle
+procedure FreePSDT is new Ada.Unchecked_Deallocation (DoubletTriangle, pointeurSurPointeurDT);
+
+
 end modele;

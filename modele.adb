@@ -57,12 +57,25 @@ end insererDoubletTriangle;
 
 --Procedure permettant de désalouer tous les triangles du tableau
 procedure desalouerTriangle ( tableauDoubletT : in tableauDoubletTriangle) is
-	x : integer;
+	ptTemp1, ptTemp2 :pointeurSurPointeurDT;
 begin
-	--#TODO
-	x:=0;
+	
+	for i in 0..(tableauDoubletT'LENGTH-1) loop
+		ptTemp1 := tableauDoubletT(i);
+		ptTemp2 := tableauDoubletT(i).Succ;
+		while (ptTemp1 /= NULL) loop
+			FreePSDT(ptTemp1);
+			
+			if ptTemp2 /= NULL then
+				ptTemp1 := ptTemp2.Succ;
+				FreePSDT(ptTemp2);
+			end if;
+			if ptTemp1 /= NULL then 
+				ptTemp2 := ptTemp1.Succ;
+			end if;
+			
+		end loop;
+	end loop;
 end desalouerTriangle;
-
-
 
 end modele;
