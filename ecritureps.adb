@@ -10,11 +10,21 @@ package body ecritureps is
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle) is 
 	
 	begin
+
 	init(tabTDoubletTriangleTrie'LENGTH);
+
 	Demarrer(tabTDoubletTriangleTrie);
 	
-	while finDeSequence loop
+	while not(finDeSequence) loop
+		--
+			Ada.Text_Io.Put("Donc j'ajoute mon triangle");
+			Ada.Text_Io.New_Line;
+		--
 		ajouterUnTriangle(elementCourant);
+		--
+			Ada.Text_Io.Put("J'avance");
+			Ada.Text_Io.New_Line;
+		--
 		Avancer(tabTDoubletTriangleTrie);
 	end loop;
 	
@@ -54,8 +64,18 @@ package body ecritureps is
 			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x) & " " & Float'Image(pointeur.y) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
-			Ada.Text_Io.Put(fichierRes, "gsave\n"&remplissage&"\nfill\ngrestore"&contour&"\nstroke");
-			Ada.Text_Io.New_Line(fichierRes);	
+			Ada.Text_Io.Put(fichierRes, "gsave");
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes, remplissage);
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes,"fill");
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes,"grestore");
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes,contour);
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes,"stroke");
+			Ada.Text_Io.New_Line(fichierRes);
 	end ajouterUnTriangle;
 	
 end ecritureps;

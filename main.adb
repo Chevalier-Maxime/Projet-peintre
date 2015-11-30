@@ -1,7 +1,7 @@
 With modele;Use modele;
 with triobjet;use triobjet;
 with lectureoff; use lectureoff;
---with ecrire; use ecrire;
+with ecritureps; use ecritureps;
 
 With Ada.Command_Line;
 Use Ada.Command_Line;
@@ -19,6 +19,7 @@ procedure main is
 		while i <= taille loop
 			
 			Ada.Text_Io.Put( "i: " & Integer'Image(i));
+			Ada.Text_Io.New_Line;
 			
 			ptCourant := tabDT(i);
 			while (ptCourant /= NULL) and then (ptCourant.Objet.s1 /= NULL) loop

@@ -22,11 +22,7 @@ procedure trouveMinMax( tabS : in tableauSommet; min : out float; max : out floa
 	zLu : float;
 begin
 	
-	--
-	Ada.Text_Io.Put("On est entre dans min max");
-	Ada.Text_Io.New_Line;
-	--
-	
+
 	tailleTableauSommet := tabS'LENGTH;
 	zLu := tabS(0).z ;
 	min := zLu;
@@ -36,10 +32,7 @@ begin
 	while i < tailleTableauSommet-1 loop
 		
 		zLu := tabS(i).z;
-		--
-		Ada.Text_Io.Put("z : " & Float'Image(zLu));
-		Ada.Text_Io.New_Line;
-		--
+
 		if zLu > max then
 			max := zLu;
 		end if;
@@ -52,12 +45,7 @@ begin
 		
 	end loop;
 	
-	--
-	Ada.Text_Io.Put("On est sorti de la boucle");
-	Ada.Text_Io.New_Line;
-	--
-	
-	
+
 end trouveMinMax;
 
 -- Procedure permettant de trier les triangles
@@ -67,21 +55,17 @@ procedure trierTriangle (tabDT : in out tableauDoubletTriangle; tabS : in tablea
 	c : float;
 	i,indice : integer;
 begin
-	
-	--
-	Ada.Text_Io.Put("On est entre dans trier Triangle");
-	Ada.Text_Io.New_Line;
-	--
+
 	
 	trouveMinMax(tabS, min, max);
-	
-	--
-	Ada.Text_Io.Put("On a trouve min max" & Float'Image(min) & " " & Float'Image(max));
-	Ada.Text_Io.New_Line;
-	--
+
 	
 	i:=0;
 	while i < nbFace loop
+			--
+			Ada.Text_Io.Put("Ajout triangle : "& Integer'Image(i) );
+			Ada.Text_Io.New_Line;
+			--
 		ptCourant := new DoubletTriangle; --Nouvelle allocation en mémoire pour chaque double triangle ------------------------------------#TODO
 		creerDoubletTriangle (ptCourant, tabS); --Le ptCourant pointe sur un nouveau Doublet Triangle
 		c := ptCourant.Objet.minZ; 		  --On récupère le z minimum de la structure
@@ -89,17 +73,7 @@ begin
 		
 		
 		indice := Integer(Float'Floor(Float(nbFace)*((c-min)/(max-min)))); --On calcule l'indice ou placer le doublet triangle
-	
-		--
-		Ada.Text_Io.Put("c : " & Float'Image(c));
-		Ada.Text_Io.New_Line;
-		--
-		
-		--
-		Ada.Text_Io.Put("indice : " & Integer'Image(indice));
-		Ada.Text_Io.New_Line;
-		--
-		
+
 		insererDoubletTriangle (ptCourant.all, indice, tabDT); --On place le doublet triangle dans le tableau au bon endroit
 		i:=i+1;
 	end loop;

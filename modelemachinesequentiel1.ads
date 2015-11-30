@@ -1,5 +1,6 @@
 With modele;Use modele;
-
+With Ada.Text_IO;
+Use Ada.Text_IO;
 package modelemachinesequentiel1 is
 
 	function elementCourant return Triangle;
