@@ -51,7 +51,7 @@ type tableauSommet is  array (integer range <>) of Sommet;
 type tableauDoubletTriangle is array (integer range <>) of pointeurSurPointeurDT;
 
 --Procedure permettant d'inserer un DoubletTriangle dans le tableau
-procedure insererDoubletTriangle (doubleT : in out DoubletTriangle; indice : in integer; tableauDoubletT : in out tableauDoubletTriangle);
+procedure insererDoubletTriangle (ptdoubleT : in out pointeurSurPointeurDT; indice : in integer; tableauDoubletT : in out tableauDoubletTriangle);
 
 --Procedure permettant de désalouer tous les triangles du tableau
 procedure desalouerTriangle ( tableauDoubletT : in tableauDoubletTriangle);

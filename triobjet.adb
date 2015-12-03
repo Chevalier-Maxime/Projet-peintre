@@ -4,7 +4,7 @@ package body triobjet is
 
 
 --Fonction permettant de renvoyer un doublet Triangle lu dans un fichier
-procedure creerDoubletTriangle ( ptDT : in out pointeurListeDoubletT; tabS : in tableauSommet) is 
+procedure creerDoubletTriangle ( ptDT : in out pointeurSurPointeurDT; tabS : in tableauSommet) is 
 	ptTriangle : pointeurTriangle;
 begin
 	ptTriangle := new Triangle;
@@ -22,6 +22,10 @@ procedure trouveMinMax( tabS : in tableauSommet; min : out float; max : out floa
 	zLu : float;
 begin
 	
+	--
+	Ada.Text_Io.Put("On est entre dans min max");
+	Ada.Text_Io.New_Line;
+	--
 
 	tailleTableauSommet := tabS'LENGTH;
 	zLu := tabS(0).z ;
@@ -32,7 +36,10 @@ begin
 	while i < tailleTableauSommet-1 loop
 		
 		zLu := tabS(i).z;
-
+		--
+		Ada.Text_Io.Put("z : " & Float'Image(zLu));
+		Ada.Text_Io.New_Line;
+		--
 		if zLu > max then
 			max := zLu;
 		end if;
@@ -44,21 +51,31 @@ begin
 		i:=i+1;
 		
 	end loop;
-	
+	--
+	Ada.Text_Io.Put("On est sorti de min max");
+	Ada.Text_Io.New_Line;
+	--
 
 end trouveMinMax;
 
 -- Procedure permettant de trier les triangles
 procedure trierTriangle (tabDT : in out tableauDoubletTriangle; tabS : in tableauSommet; nbFace : in integer) is
 	min, max : float;
-	ptCourant : pointeurListeDoubletT;
+	ptCourant : pointeurSurPointeurDT;
 	c : float;
 	i,indice : integer;
 begin
-
+	--
+	Ada.Text_Io.Put("On est entre dans trier Triangle");
+	Ada.Text_Io.New_Line;
+	--
 	
 	trouveMinMax(tabS, min, max);
-
+	
+	--
+	Ada.Text_Io.Put("On a trouve min max" & Float'Image(min) & " " & Float'Image(max));
+	Ada.Text_Io.New_Line;
+	--
 	
 	i:=0;
 	while i < nbFace loop
@@ -73,8 +90,19 @@ begin
 		
 		
 		indice := Integer(Float'Floor(Float(nbFace)*((c-min)/(max-min)))); --On calcule l'indice ou placer le doublet triangle
-
-		insererDoubletTriangle (ptCourant.all, indice, tabDT); --On place le doublet triangle dans le tableau au bon endroit
+		
+		--
+		Ada.Text_Io.Put("c : " & Float'Image(c));
+		Ada.Text_Io.New_Line;
+		--
+		
+		--
+		Ada.Text_Io.Put("indice : " & Integer'Image(indice));
+		Ada.Text_Io.New_Line;
+		--
+		
+		
+		insererDoubletTriangle (ptCourant, indice, tabDT); --On place le doublet triangle dans le tableau au bon endroit
 		i:=i+1;
 	end loop;
 end trierTriangle;

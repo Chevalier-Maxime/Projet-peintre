@@ -22,7 +22,7 @@ procedure main is
 			Ada.Text_Io.New_Line;
 			
 			ptCourant := tabDT(i);
-			while (ptCourant /= NULL) and then (ptCourant.Objet.s1 /= NULL) loop
+			while (ptCourant /= NULL) loop
 				Ada.Text_Io.Put(" Triangle");
 				Ada.Text_Io.New_Line;
 				Ada.Text_Io.Put( "x: " & Float'Image(ptCourant.Objet.s1.x) & " y: " & Float'Image(ptCourant.Objet.s1.y) & " z: " & Float'Image(ptCourant.Objet.s1.z));
@@ -64,7 +64,7 @@ begin
 			
 			i :=0;
 			while i <= nbFace loop
-				tabDT(i) := new DoubletTriangle;
+				tabDT(i) := Null;
 				i:=i+1;
 			end loop;
 			
