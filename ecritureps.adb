@@ -17,6 +17,10 @@ package body ecritureps is
 	
 	while not(finDeSequence) loop
 		--
+			Ada.Text_Io.Put("Avant avancer Fin de sequence :"&Boolean'Image(not(finDeSequence)));
+			Ada.Text_Io.New_Line;
+			--
+		--
 			Ada.Text_Io.Put("Donc j'ajoute mon triangle");
 			Ada.Text_Io.New_Line;
 		--
@@ -26,8 +30,15 @@ package body ecritureps is
 			Ada.Text_Io.New_Line;
 		--
 		Avancer(tabTDoubletTriangleTrie);
+		--
+			Ada.Text_Io.Put("Après avancer Fin de sequence :"&Boolean'Image(not(finDeSequence)));
+			Ada.Text_Io.New_Line;
+		--
 	end loop;
-	
+	--
+			Ada.Text_Io.Put("I'AM FRUUUUUUUUUUUUUUUUUUUIT");
+			Ada.Text_Io.New_Line;
+		--
 	end ecritureDesTriangles;
 	
 	procedure creerFichier( nomFichier : in string) is
@@ -45,8 +56,8 @@ package body ecritureps is
 	
 	procedure ajouterUnTriangle(trian : Triangle) is 
 			pointeur : pointeurSommet;
-			remplissage : string := "0 setgray";
-			contour : string := "1 setgray";
+			contour : string := "0 setgray";
+			remplissage : string := "1 setgray";
 		begin
 			pointeur := trian.s1;	
 			Ada.Text_Io.Put(fichierRes, Float'Image(pointeur.x) & " " & Float'Image(pointeur.y) & " moveto");

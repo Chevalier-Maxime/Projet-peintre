@@ -2,7 +2,7 @@
 package body modelemachinesequentiel1 is
 
 	--sequence : tableauDoubletTriangle;
-	N, pointeur:integer;
+	N, pointeurTete:integer;
 	ptCourant : pointeurSurPointeurDT;
 
 	procedure Init(taille : in integer) is
@@ -16,15 +16,17 @@ package body modelemachinesequentiel1 is
 
 	procedure Demarrer(sequence : in tableauDoubletTriangle) is
 	begin
-		pointeur:=0;
-		ptCourant := sequence(pointeur);
-
+		pointeurTete:=0;
+		while not finDeSequence and then sequence(pointeurTete)=Null loop
+			pointeurTete := pointeurTete+1;
+		end loop;
+		ptCourant := sequence(pointeurTete);
 	end Demarrer;
 
 	function elementCourant return Triangle is
 	begin
 		--
-			Ada.Text_Io.Put("Pointeur Element courant :"&Integer'Image(pointeur));
+			Ada.Text_Io.Put("Pointeur Element courant :"&Integer'Image(pointeurTete));
 			Ada.Text_Io.New_Line;
 		--
 		return ptCourant.Objet;
@@ -32,32 +34,23 @@ package body modelemachinesequentiel1 is
 		
 	function finDeSequence return boolean is
 	begin
-			--
-			Ada.Text_Io.Put("Fin de sequence :"&Boolean'Image(pointeur=N));
-			Ada.Text_Io.New_Line;
-			--
-		return pointeur=N;
+		return pointeurTete=N;
 	end finDeSequence;
 	
 	
 	
 	procedure Avancer(sequence :in tableauDoubletTriangle) is
 	begin
-		 
-		ptCourant := ptCourant.Succ;
-
-		if (ptCourant = null) then
-			pointeur:=pointeur+1;
-
-			while (sequence(pointeur)=null) and (sequence(pointeur).Objet.s1=null) and not(finDeSequence) loop
-				pointeur:=pointeur+1;
+		 ptCourant := ptCourant.Succ;
+		 if (ptCourant= null) then
+			pointeurTete := pointeurTete+1;
+			while not(finDeSequence) and then sequence(pointeurTete)=null loop
+				pointeurTete := pointeurTete+1;
 			end loop;
-			ptCourant:=sequence(pointeur);
-		end if;
-		--
-			Ada.Text_Io.Put("Pointeur après avancer:"&Integer'Image(pointeur));
-			Ada.Text_Io.New_Line;
-		--
+			if not(finDeSequence) then
+				ptCourant := sequence(pointeurTete);
+			end if;
+		 end if;
 	end Avancer;
 
 end modelemachinesequentiel1;

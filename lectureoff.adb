@@ -74,16 +74,24 @@ package body lectureoff is
 				pointeur1 := new Sommet;
 		        pointeur2 := new Sommet;
 		        pointeur3 := new Sommet;
-				pointeur1.all := TS(p1);
-		        pointeur2.all := TS(p2);
-		        pointeur3.all := TS(p3);
-				min:=minimumZ(pointeur1.z,pointeur2.z,pointeur3.z);
-				
+		        if (p1<TS'LENGTH) and then (p2<TS'LENGTH) and then (p3<TS'LENGTH) then
+					pointeur1.all := TS(p1);
+					pointeur2.all := TS(p2);
+					pointeur3.all := TS(p3);
+					min:=minimumZ(pointeur1.z,pointeur2.z,pointeur3.z);
+					Skip_Line (fichier);
+					t:= (pointeur1,pointeur2,pointeur3,min);
+				else
+					--PB
+					pointeur1:=null;				
+				end if;	
+			else
+			--PB
+			pointeur1:=null;
 			end if;
-			--Creation du triangle
-			Skip_Line (fichier);
-			t:= (pointeur1,pointeur2,pointeur3,min);
-			
+		else
+		--PB
+		pointeur1:=null;
 		end if;
 		
 		return t;
