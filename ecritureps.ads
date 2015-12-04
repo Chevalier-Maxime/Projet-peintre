@@ -8,6 +8,8 @@ Use modelemachinesequentiel1;
 package ecritureps is
 
 	--Procedure permettant d'écrire les Triangles
+	procedure ecrire( tabTDoubletTriangleTrie : in tableauDoubletTriangle);
+	
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle);
 	
 	procedure creerFichier( nomFichier : in string);
@@ -15,5 +17,7 @@ package ecritureps is
 	procedure fermerFichier;
 	
 	procedure ajouterUnTriangle(trian : Triangle);
+	
+	procedure trouverCoef(cx,cy : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle);
 	
 end ecritureps;
