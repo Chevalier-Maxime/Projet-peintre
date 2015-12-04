@@ -8,10 +8,10 @@ package body modelemachinesequentiel1 is
 	procedure Init(taille : in integer) is
 	begin
 		N:=taille;
-		--
-			Ada.Text_Io.Put("N :"&Integer'Image(N));
-			Ada.Text_Io.New_Line;
-		--
+		--~ --
+			--~ Ada.Text_Io.Put("N :"&Integer'Image(N));
+			--~ Ada.Text_Io.New_Line;
+		--~ --
 	end Init;
 
 	procedure Demarrer(sequence : in tableauDoubletTriangle) is
@@ -25,10 +25,10 @@ package body modelemachinesequentiel1 is
 
 	function elementCourant return Triangle is
 	begin
-		--
-			Ada.Text_Io.Put("Pointeur Element courant :"&Integer'Image(pointeurTete));
-			Ada.Text_Io.New_Line;
-		--
+		--~ --
+			--~ Ada.Text_Io.Put("Pointeur Element courant :"&Integer'Image(pointeurTete));
+			--~ Ada.Text_Io.New_Line;
+		--~ --
 		return ptCourant.Objet;
 	end elementCourant;
 		

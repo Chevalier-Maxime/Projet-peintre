@@ -44,17 +44,17 @@ begin
 		Ada.Text_Io.Put(" le programme s'utilise de la manière suivant : main nomfichierOFF nomfichierPS");
 	else
 		ouvrir(Argument(1));
-		--
-		Ada.Text_Io.Put("On a ouvert le fichier");
-		Ada.Text_Io.New_Line;
-		--
+		--~ --
+		--~ Ada.Text_Io.Put("On a ouvert le fichier");
+		--~ Ada.Text_Io.New_Line;
+		--~ --
 		nbSommet := 0;
 		nbFace :=0;
 		chargerNbSommetsNbFaces(nbSommet, nbFace);
-		--
-		Ada.Text_Io.Put("On a charge nbSommet et nbFace" & Integer'Image(nbSommet) & " " & Integer'Image(nbFace));
-		Ada.Text_Io.New_Line;
-		--
+		--~ --
+		--~ Ada.Text_Io.Put("On a charge nbSommet et nbFace" & Integer'Image(nbSommet) & " " & Integer'Image(nbFace));
+		--~ Ada.Text_Io.New_Line;
+		--~ --
 		
 		declare
 			tabSommet : tableauSommet(0..nbSommet);
@@ -69,39 +69,39 @@ begin
 			end loop;
 			
 			numeroSommetCourant :=0;
-			--
-			Ada.Text_Io.Put("On entre dans la boucle");
-			Ada.Text_Io.New_Line;
-			--
+			--~ --
+			--~ Ada.Text_Io.Put("On entre dans la boucle");
+			--~ Ada.Text_Io.New_Line;
+			--~ --
 			while numeroSommetCourant < nbSommet loop
 				
 				--demander de lire les sommets
 				tabSommet(numeroSommetCourant) := chargerSommet(nbSommet, numeroSommetCourant);
 				
-				--
-				Ada.Text_Io.Put("On a insere un sommet dans le tableau");
-				Ada.Text_Io.New_Line;
-				--
+				--~ --
+				--~ Ada.Text_Io.Put("On a insere un sommet dans le tableau");
+				--~ Ada.Text_Io.New_Line;
+				--~ --
 				
 				numeroSommetCourant:= numeroSommetCourant+1;
 			end loop;
 			
-			--
-			Ada.Text_Io.Put("On est sorti de la boucle");
-			Ada.Text_Io.New_Line;
-			--
+			--~ --
+			--~ Ada.Text_Io.Put("On est sorti de la boucle");
+			--~ Ada.Text_Io.New_Line;
+			--~ --
 			
 			trierTriangle (tabDT, tabSommet, nbFace);
 			
-			fonctionTest(tabDT, nbFace);
-			
-
-			--
-			Ada.Text_Io.Put("On écrit le fichier");
-			Ada.Text_Io.New_Line;
-			--
+			--~ fonctionTest(tabDT, nbFace);
+			--~ 
+--~ 
+			--~ --
+			--~ Ada.Text_Io.Put("On écrit le fichier");
+			--~ Ada.Text_Io.New_Line;
+			--~ --
 			creerFichier(Argument(2));
-			ecritureDesTriangles(tabDT);
+			ecrire(tabDT);
 			fermerFichier;
 
 			--ecrire(tabDT, Argument(2));

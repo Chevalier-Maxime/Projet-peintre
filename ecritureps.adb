@@ -10,6 +10,7 @@ package body ecritureps is
 	longeur: float := 612.0;
 	hauteurmoit: float := 396.0;
 	longeurmoit: float := 306.0;
+	epaisseurTrait : float := 0.2;
 	coefX,coefY:float;
 	
 	procedure ecrire(tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
@@ -41,27 +42,30 @@ package body ecritureps is
 			while not(finDeSequence) loop
 				ajouterUnTriangle(elementCourant);
 				Avancer(tabTDoubletTriangleTrie);
-				--
-					Ada.Text_Io.Put("Après avancer Fin de sequence :"&Boolean'Image(not(finDeSequence)));
-					Ada.Text_Io.New_Line;
-				--
+				--~ --
+					--~ Ada.Text_Io.Put("Après avancer Fin de sequence :"&Boolean'Image(not(finDeSequence)));
+					--~ Ada.Text_Io.New_Line;
+				--~ --
 			end loop;
-			--
-				Ada.Text_Io.Put("I'AM FRUUUUUUUUUUUUUUUUUUUIT");
-				Ada.Text_Io.New_Line;
-			--
+			--~ --
+				--~ Ada.Text_Io.Put("I'AM FRUUUUUUUUUUUUUUUUUUUIT");
+				--~ Ada.Text_Io.New_Line;
+			--~ --
 		end ecritureDesTriangles;
 	
 	procedure trouverCoef(cx,cy : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
-		x,y : float;
+		xmax,ymax,xmin,ymin : float;
+		calcCoefX,calcCoefY : float;
 		pointeur1,pointeur2,pointeur3 : pointeurSommet;
 	begin
 		init(tabTDoubletTriangleTrie'LENGTH);
 
 		Demarrer(tabTDoubletTriangleTrie);
 		
-		x:=elementCourant.s1.x;
-		y:=elementCourant.s1.y;
+		xmax:=elementCourant.s1.x;
+		xmin:=elementCourant.s1.x;
+		ymax:=elementCourant.s1.y;
+		ymin:=elementCourant.s1.y;
 		
 		while not(finDeSequence) loop
 		
@@ -69,36 +73,83 @@ package body ecritureps is
 			pointeur2:=elementCourant.s2;
 			pointeur3:=elementCourant.s3;
 			
-			if(pointeur1.x>x) then
-				x:=pointeur1.x;
+			--~ recherche du xmax
+			if(pointeur1.x>xmax) then
+				xmax:=pointeur1.x;
 			end if;
-			if(pointeur2.x>x) then
-				x:=pointeur2.x;
+			if(pointeur2.x>xmax) then
+				xmax:=pointeur2.x;
 			end if;
-			if(pointeur3.x>x) then
-				x:=pointeur3.x;
+			if(pointeur3.x>xmax) then
+				xmax:=pointeur3.x;
 			end if;
-			if(pointeur1.y>y) then
-				y:=pointeur1.y;
+			
+			--~ recherche du xmin 
+			if(pointeur1.x<xmin) then
+				xmin:=pointeur1.x;
 			end if;
-			if(pointeur2.y>y) then
-				y:=pointeur2.y;
+			if(pointeur2.x<xmin) then
+				xmin:=pointeur2.x;
 			end if;
-			if(pointeur3.y>y) then
-				y:=pointeur3.y;
+			if(pointeur3.x<xmin) then
+				xmin:=pointeur3.x;
 			end if;
+			
+			--~ Recherche du ymax
+			if(pointeur1.y>ymax) then
+				ymax:=pointeur1.y;
+			end if;
+			if(pointeur2.y>ymax) then
+				ymax:=pointeur2.y;
+			end if;
+			if(pointeur3.y>ymax) then
+				ymax:=pointeur3.y;
+			end if;
+			
+			--~ Recherche du ymin
+			if(pointeur1.y<ymin) then
+				ymin:=pointeur1.y;
+			end if;
+			if(pointeur2.y<ymin) then
+				ymin:=pointeur2.y;
+			end if;
+			if(pointeur3.y<ymin) then
+				ymin:=pointeur3.y;
+			end if;
+			
 			Avancer(tabTDoubletTriangleTrie);
 
 		end loop;
-		cx:=x/longeur;
-		cy:=y/hauteur;
+		
+		if xmax<0.0 then
+			xmax := xmax * (-1.0);
+		end if;
+		if xmin<0.0 then
+			xmin := xmin * (-1.0);
+		end if;
+		if ymax<0.0 then
+			ymax := ymax * (-1.0);
+		end if;
+		if ymin<0.0 then
+			ymin := ymin * (-1.0);
+		end if;
+		
+		calcCoefX := Float'Min((longeurmoit/xmax),(longeurmoit/(xmin)));
+		
+		calcCoefY := Float'Min((hauteurmoit/ymax),(hauteurmoit/(ymin)));
+		
+		cx:=Float'Min(calcCoefX,calcCoefY);
+		cy:=Float'Min(calcCoefX,calcCoefY);
+		
+		
 	end trouverCoef;
-	
 	
 	procedure creerFichier( nomFichier : in string) is
 		begin
 			Create(fichierRes, Ada.Text_IO.Out_File, nomFichier&".ps");
 			Ada.Text_Io.Put(fichierRes, "%!PS");
+			Ada.Text_Io.New_Line(fichierRes);
+			Ada.Text_Io.Put(fichierRes, Float'Image(epaisseurTrait) &" setlinewidth");
 			Ada.Text_Io.New_Line(fichierRes);
 	end creerFichier;
 	
@@ -116,48 +167,48 @@ package body ecritureps is
 			pointeur := trian.s1;	
 			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " moveto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--
-				Ada.Text_Io.Put("Point1: ");
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				Ada.Text_Io.New_Line;
-			--
+			--~ --
+				--~ Ada.Text_Io.Put("Point1: ");
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
 			pointeur := trian.s2;	
 			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit)& " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--
-				Ada.Text_Io.Put("Point2: ");
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				Ada.Text_Io.New_Line;
-			--
+			--~ --
+				--~ Ada.Text_Io.Put("Point2: ");
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
 			pointeur := trian.s3;	
 			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--
-				Ada.Text_Io.Put("Point3");
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				Ada.Text_Io.New_Line;
-			--
-			--
-				Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				Ada.Text_Io.New_Line;
-			--
+			--~ --
+				--~ Ada.Text_Io.Put("Point3");
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
+			--~ --
+				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
+				--~ Ada.Text_Io.New_Line;
+			--~ --
 			pointeur := trian.s1;	
 			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
