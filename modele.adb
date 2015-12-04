@@ -59,7 +59,9 @@ begin
 	
 	for i in 0..(tableauDoubletT'LENGTH-1) loop
 		ptTemp1 := tableauDoubletT(i);
-		ptTemp2 := tableauDoubletT(i).Succ;
+		if (ptTemp1 /= null) then
+			ptTemp2 := tableauDoubletT(i).Succ;
+		end if;
 		while (ptTemp1 /= null) loop
 			FreePSDT(ptTemp1);
 			

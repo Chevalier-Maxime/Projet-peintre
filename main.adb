@@ -105,7 +105,7 @@ begin
 			fermerFichier;
 
 			--ecrire(tabDT, Argument(2));
-			--desalouerTriangle(tabDT);
+			desalouerTriangle(tabDT);
 
 		end;
 		
