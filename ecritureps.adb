@@ -1,67 +1,55 @@
---Ada.Text_Io.Put( fichier3, Integer'Image(A(k)));
---Ada.Text_Io.New_Line(fichier3);
-	
-
-
 package body ecritureps is 
 	
+	--Fichier resultat : 
 	fichierRes: Ada.Text_IO.File_Type;
+	
+	-- Constante
 	hauteur: float := 792.0;
 	longeur: float := 612.0;
 	hauteurmoit: float := 396.0;
 	longeurmoit: float := 306.0;
 	epaisseurTrait : float := 0.2;
-	coefX,coefY:float;
 	
+	--Coeficient de translation
+	coef:float;
+	
+	--*************************************************************************************
+	--Fonction principale du module écriture: calcul du coeficient + écriture des triangles
+	--*************************************************************************************
 	procedure ecrire(tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
-	begin
-	trouverCoef(coefX,coefY,tabTDoubletTriangleTrie);
-	--
-		Ada.Text_Io.Put("Fin de calcul des coefs: ");
-		Ada.Text_Io.New_Line;
-	--
-	--
-		Ada.Text_Io.Put("coefX : "&Float'Image(coefX));
-		Ada.Text_Io.New_Line;
-	--
-	--
-		Ada.Text_Io.Put("coefY : "&Float'Image(coefY));
-		Ada.Text_Io.New_Line;
-	--
-	
-	ecritureDesTriangles(tabTDoubletTriangleTrie);
+		begin
+		trouverCoef(coef,coef,tabTDoubletTriangleTrie);		
+		ecritureDesTriangles(tabTDoubletTriangleTrie);
 	end ecrire;
 	
+	--*************************************************************************************
+	--Fonction d'écriture des triangles
+	--*************************************************************************************
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle) is 
-		
 		begin
 			init(tabTDoubletTriangleTrie'LENGTH);
-
 			Demarrer(tabTDoubletTriangleTrie);
-			
 			while not(finDeSequence) loop
 				ajouterUnTriangle(elementCourant);
 				Avancer(tabTDoubletTriangleTrie);
-				--~ --
-					--~ Ada.Text_Io.Put("Après avancer Fin de sequence :"&Boolean'Image(not(finDeSequence)));
-					--~ Ada.Text_Io.New_Line;
-				--~ --
 			end loop;
-			--~ --
-				--~ Ada.Text_Io.Put("I'AM FRUUUUUUUUUUUUUUUUUUUIT");
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-		end ecritureDesTriangles;
+	end ecritureDesTriangles;
 	
-	procedure trouverCoef(cx,cy : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
+	--*************************************************************************************
+	--Fonction de calcul du coeficient
+	--*************************************************************************************
+	procedure trouverCoef(c : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
+		
 		xmax,ymax,xmin,ymin : float;
 		calcCoefX,calcCoefY : float;
 		pointeur1,pointeur2,pointeur3 : pointeurSommet;
+		
 	begin
 		init(tabTDoubletTriangleTrie'LENGTH);
 
 		Demarrer(tabTDoubletTriangleTrie);
 		
+		--initialisation
 		xmax:=elementCourant.s1.x;
 		xmin:=elementCourant.s1.x;
 		ymax:=elementCourant.s1.y;
@@ -73,7 +61,7 @@ package body ecritureps is
 			pointeur2:=elementCourant.s2;
 			pointeur3:=elementCourant.s3;
 			
-			--~ recherche du xmax
+			-- recherche du xmax
 			if(pointeur1.x>xmax) then
 				xmax:=pointeur1.x;
 			end if;
@@ -84,7 +72,7 @@ package body ecritureps is
 				xmax:=pointeur3.x;
 			end if;
 			
-			--~ recherche du xmin 
+			-- recherche du xmin 
 			if(pointeur1.x<xmin) then
 				xmin:=pointeur1.x;
 			end if;
@@ -95,7 +83,7 @@ package body ecritureps is
 				xmin:=pointeur3.x;
 			end if;
 			
-			--~ Recherche du ymax
+			-- Recherche du ymax
 			if(pointeur1.y>ymax) then
 				ymax:=pointeur1.y;
 			end if;
@@ -106,7 +94,7 @@ package body ecritureps is
 				ymax:=pointeur3.y;
 			end if;
 			
-			--~ Recherche du ymin
+			-- Recherche du ymin
 			if(pointeur1.y<ymin) then
 				ymin:=pointeur1.y;
 			end if;
@@ -135,15 +123,14 @@ package body ecritureps is
 		end if;
 		
 		calcCoefX := Float'Min((longeurmoit/xmax),(longeurmoit/(xmin)));
-		
 		calcCoefY := Float'Min((hauteurmoit/ymax),(hauteurmoit/(ymin)));
-		
-		cx:=Float'Min(calcCoefX,calcCoefY);
-		cy:=Float'Min(calcCoefX,calcCoefY);
-		
+		c:=Float'Min(calcCoefY,calcCoefX);
 		
 	end trouverCoef;
 	
+	--*************************************************************************************
+	--Fonction de création du fichier résultat
+	--*************************************************************************************
 	procedure creerFichier( nomFichier : in string) is
 		begin
 			Create(fichierRes, Ada.Text_IO.Out_File, nomFichier&".ps");
@@ -153,66 +140,46 @@ package body ecritureps is
 			Ada.Text_Io.New_Line(fichierRes);
 	end creerFichier;
 	
+	--*************************************************************************************
+	--Fonction de fermeture du fichier resultat
+	--*************************************************************************************
 	procedure fermerFichier is
 		begin
 			Ada.Text_Io.Put(fichierRes, "showpage");
 			close(fichierRes);
 	end fermerFichier;
 	
+	--*************************************************************************************
+	--Fonction d'ajout d'un triangle
+	--*************************************************************************************
 	procedure ajouterUnTriangle(trian : Triangle) is 
+			
 			pointeur : pointeurSommet;
 			contour : string := "0 setgray";
 			remplissage : string := "1 setgray";
+			
 		begin
+			--positionnement du pointeur
 			pointeur := trian.s1;	
-			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " moveto");
+			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coef)+longeurmoit) & " " & Float'Image((pointeur.y*coef)+hauteurmoit) & " moveto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--~ --
-				--~ Ada.Text_Io.Put("Point1: ");
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
+
+			--Tracé du premier segment
 			pointeur := trian.s2;	
-			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit)& " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
+			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coef)+longeurmoit)& " " & Float'Image((pointeur.y*coef)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--~ --
-				--~ Ada.Text_Io.Put("Point2: ");
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
+
+			--Tracé du deuxième segment
 			pointeur := trian.s3;	
-			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
+			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coef)+longeurmoit) & " " & Float'Image((pointeur.y*coef)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
-			--~ --
-				--~ Ada.Text_Io.Put("Point3");
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("X : "&Float'Image((pointeur.x*coefX)+longeurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
-			--~ --
-				--~ Ada.Text_Io.Put("Y : "&Float'Image((pointeur.y*coefY)+hauteurmoit));
-				--~ Ada.Text_Io.New_Line;
-			--~ --
+
+			--Tracé du troisième segment
 			pointeur := trian.s1;	
-			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coefX)+longeurmoit) & " " & Float'Image((pointeur.y*coefY)+hauteurmoit) & " lineto");
+			Ada.Text_Io.Put(fichierRes, Float'Image((pointeur.x*coef)+longeurmoit) & " " & Float'Image((pointeur.y*coef)+hauteurmoit) & " lineto");
 			Ada.Text_Io.New_Line(fichierRes);
 			
+			--Paramètre pour l'affichage d'un triangle
 			Ada.Text_Io.Put(fichierRes, "gsave");
 			Ada.Text_Io.New_Line(fichierRes);
 			Ada.Text_Io.Put(fichierRes, remplissage);

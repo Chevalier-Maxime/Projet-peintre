@@ -7,8 +7,7 @@ Use modelemachinesequentiel1;
 
 package ecritureps is
 
-	--Procedure permettant d'écrire les Triangles
-	procedure ecrire( tabTDoubletTriangleTrie : in tableauDoubletTriangle);
+	procedure ecrire( tabTDoubletTriangleTrie : in tableauDoubletTriangle);	
 	
 	procedure ecritureDesTriangles( tabTDoubletTriangleTrie : in tableauDoubletTriangle);
 	

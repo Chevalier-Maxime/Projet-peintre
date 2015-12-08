@@ -1,26 +1,18 @@
--- Git : Heloise-fernandes
--- Pwd : féeNovembre
-
 package body lectureoff is
 
 	fichier : Ada.Text_IO.File_Type;
 
+	--*************************************************************************************
+	--Fonction d'ouverture du fichier
+	--*************************************************************************************
 	procedure ouvrir(Nom : in String) is
 		begin
 			Open(fichier, Ada.Text_IO.In_File, Nom&".off");
 	end ouvrir; 
 
--- sudo apt-get install git 
--- get clone add du repo
--- git pull
--- git push
--- git add .
--- git commit -m "blop" 
-
-
--- lire le nb de sommet m et le nobre de face n
--- Creer un tableau de sommets de taille m
-
+	--*************************************************************************************
+	--Fonction de chargement du nombre de sommet et du nombre de face
+	--*************************************************************************************
 	procedure chargerNbSommetsNbFaces(m : in out Integer; n : in out Integer) is
 
 		carac : string :="";
@@ -35,10 +27,14 @@ package body lectureoff is
 		end if;
 	end chargerNbSommetsNbFaces;
 
+	--*************************************************************************************
+	--Fonction qui lit et renvoie un sommet
+	--*************************************************************************************
 	function chargerSommet(m, indice : in Integer) return Sommet is
 
 		s : Sommet;
 		x,y,z : Float;
+		
 		begin
 		s:=(0.0,0.0,0.0);
 		if not (End_of_file(fichier)) and m/=indice then
@@ -50,16 +46,21 @@ package body lectureoff is
 			s:= (x,y,z);
 			
 		end if;
+		
 		return s;
 		
 	end chargerSommet;
 
+	--*************************************************************************************
+	--Fonction qui lit et creer un triangle
+	--*************************************************************************************
 	function chargerTriangle(TS : in tableauSommet) return Triangle is
 
-			t : Triangle;
-			nbPoint,p1,p2,p3 : integer := 0;
-			pointeur1,pointeur2,pointeur3 : pointeurSommet;
-			min: float;
+		t : Triangle;
+		nbPoint,p1,p2,p3 : integer := 0;
+		pointeur1,pointeur2,pointeur3 : pointeurSommet;
+		min: float;
+		
 		begin
 		nbPoint:=0;
 
@@ -67,13 +68,16 @@ package body lectureoff is
 			Get(fichier, nbPoint);
 			
 			if (nbPoint=3)then
+				
 				Get(fichier, p1);
 				Get(fichier, p2);
 				Get(fichier, p3);
+				
 				--On recupere les donnees
 				pointeur1 := new Sommet;
 		        pointeur2 := new Sommet;
 		        pointeur3 := new Sommet;
+		        
 		        if (p1<TS'LENGTH) and then (p2<TS'LENGTH) and then (p3<TS'LENGTH) then
 					pointeur1.all := TS(p1);
 					pointeur2.all := TS(p2);
@@ -82,15 +86,15 @@ package body lectureoff is
 					Skip_Line (fichier);
 					t:= (pointeur1,pointeur2,pointeur3,min);
 				else
-					--PB
+					--PB : Le point n'existe pas
 					pointeur1:=null;				
 				end if;	
 			else
-			--PB
+			--PB : Ce n'est pas un triangle
 			pointeur1:=null;
 			end if;
 		else
-		--PB
+		--PB : Le fichier est terminé
 		pointeur1:=null;
 		end if;
 		
@@ -98,9 +102,12 @@ package body lectureoff is
 		
 	end chargerTriangle;
 
+	--*************************************************************************************
+	--Fonction de calcul du z minimum
+	--*************************************************************************************
 	function minimumZ(z1,z2,z3 : in float) return float is
 
-			m : float;
+		m : float;
 
 		begin
 			if(z1<=z2)and(z1<=z3) then 
