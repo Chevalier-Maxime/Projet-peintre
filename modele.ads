@@ -3,17 +3,28 @@ With Ada.Text_IO;
 Use Ada.Text_IO;
 
 package modele is
-
+--~ Structure comportant 3 flotant, x, y, z pour représenter les coordonnées d'un point
 type Sommet;
-type Point;
+
+--~ Structure comportant 3 sommet, et un flotant (le minimum z des trois sommets) pour representer un Triangle
 type Triangle;
+
+--~ Structure permetant de représenter une liste chainé de triangle
 type DoubletTriangle;
 
+--~ Pointeur sur un sommet
 type pointeurSommet is access Sommet;
+
+--~ Pointeur sur un triangle
 type pointeurTriangle is access Triangle;
+
+--~ Pointeur sur un élement d'une liste de triangle
 type pointeurListeDoubletT is access DoubletTriangle;
+
+--~ Pointeur sur n'importe quel element de la liste de triangle
 type pointeurSurPointeurDT is access all DoubletTriangle;
---Sommet 
+
+--Corps de la structure Sommet 
 type Sommet is 
 record 
 	x:Float;
@@ -21,14 +32,14 @@ record
 	z:Float;
 end record;
 
---Point
+--Corps de la structure Point
 type Point is 
 record 
 	x:Float;
 	y:Float;
 end record;
 
---Triangle
+--Corps de la structure Triangle
 type Triangle is 
 record 
 	s1:pointeurSommet;
@@ -37,7 +48,7 @@ record
 	minZ: Float;
 end record;
 
---DoubletTriangle
+--Corps de la structure DoubletTriangle
 type DoubletTriangle is 
 record 
 	Objet:Triangle;
