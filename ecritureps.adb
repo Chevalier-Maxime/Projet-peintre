@@ -18,7 +18,7 @@ package body ecritureps is
 	--*************************************************************************************
 	procedure ecrire(tabTDoubletTriangleTrie : in tableauDoubletTriangle) is
 		begin
-		trouverCoef(coef,coef,tabTDoubletTriangleTrie);		
+		trouverCoef(coef,tabTDoubletTriangleTrie);		
 		ecritureDesTriangles(tabTDoubletTriangleTrie);
 	end ecrire;
 	

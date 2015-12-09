@@ -17,6 +17,6 @@ package ecritureps is
 	
 	procedure ajouterUnTriangle(trian : Triangle);
 	
-	procedure trouverCoef(cx,cy : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle);
+	procedure trouverCoef(c : in out float; tabTDoubletTriangleTrie : in tableauDoubletTriangle);
 	
 end ecritureps;
