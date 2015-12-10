@@ -18,6 +18,7 @@ package lectureoff is
 	function chargerTriangle(TS : in tableauSommet) return Triangle;
 
 	function minimumZ(z1,z2,z3 : in float) return float;
-
+	
+	procedure testFichierOFF(test : in out boolean);
 
 end lectureoff;
