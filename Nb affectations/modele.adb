@@ -24,7 +24,6 @@ end insererDoubletTriangle;
 
 
 
-
 --Procedure permettant de désalouer tous les triangles du tableau
 procedure desalouerTriangle ( tableauDoubletT : in tableauDoubletTriangle) is
 	ptTemp1, ptTemp2 :pointeurSurPointeurDT;
@@ -58,6 +57,5 @@ begin
 		end loop;
 	end loop;
 end desalouerTriangle;
-
 
 end modele;
